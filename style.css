@@ -1,0 +1,635 @@
+/* ===========================
+RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+}
+
+body{
+
+    font-family:'Press Start 2P',cursive;
+
+    overflow:hidden;
+
+    color:white;
+
+    background:
+    radial-gradient(circle at top,#4fd5ff 0%,#006cff 30%,#001f66 65%,#000814 100%);
+
+}
+
+/* ===========================
+FONDO
+=========================== */
+
+#background{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    z-index:-10;
+
+}
+
+#stars,
+#particles{
+
+    position:absolute;
+
+    inset:0;
+
+}
+
+#moon{
+
+    position:absolute;
+
+    top:60px;
+
+    right:80px;
+
+    width:140px;
+
+    height:140px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(circle,#ffffff,#dff6ff 45%,#91d8ff);
+
+    box-shadow:
+    0 0 30px #9ce7ff,
+    0 0 70px #63c8ff,
+    0 0 120px #2d8dff;
+
+}
+
+/* ===========================
+PANTALLAS
+=========================== */
+
+.screen{
+
+    position:absolute;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    padding:30px;
+
+    text-align:center;
+
+}
+
+.screen.active{
+
+    display:flex;
+
+}
+
+/* ===========================
+TÍTULOS
+=========================== */
+
+h1{
+
+    font-size:38px;
+
+    margin-bottom:25px;
+
+    color:#aef8ff;
+
+    text-shadow:
+    0 0 10px #00ffff,
+    0 0 25px #00d9ff,
+    0 0 45px #00a6ff;
+
+}
+
+h2{
+
+    margin-bottom:25px;
+
+    line-height:1.8;
+
+}
+
+p{
+
+    line-height:2;
+
+    max-width:750px;
+
+}
+
+/* ===========================
+BOTONES
+=========================== */
+
+button{
+
+    margin-top:25px;
+
+    padding:18px 28px;
+
+    font-family:'Press Start 2P';
+
+    border:3px solid #6ceeff;
+
+    background:#041b42;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+button:hover{
+
+    transform:scale(1.05);
+
+    background:#6ceeff;
+
+    color:#001428;
+
+}
+
+/* ===========================
+HUD
+=========================== */
+
+.hud{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:30px;
+
+    font-size:12px;
+
+}
+
+#lives{
+
+    margin-bottom:25px;
+
+    font-size:24px;
+
+}
+
+/* ===========================
+BARRA DE PROGRESO
+=========================== */
+
+#progressBar{
+
+    width:min(700px,90%);
+
+    height:22px;
+
+    border:3px solid white;
+
+    margin-bottom:40px;
+
+}
+
+#progressFill{
+
+    width:0%;
+
+    height:100%;
+
+    background:
+    linear-gradient(90deg,#00d5ff,#7df5ff);
+
+}
+
+/* ===========================
+RESPUESTAS
+=========================== */
+
+#answers{
+
+    width:min(900px,95%);
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:18px;
+
+}
+
+.answer{
+
+    padding:22px;
+
+    border:3px solid #58d8ff;
+
+    background:#021c48;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.answer:hover{
+
+    transform:translateY(-4px);
+
+    background:#005fd1;
+
+}
+
+.correct{
+
+    background:#31d96b !important;
+
+    color:#001400 !important;
+
+}
+
+.wrong{
+
+    background:#ff4b4b !important;
+
+}
+
+/* ===========================
+BOSS
+=========================== */
+
+.bossLife{
+
+    width:min(650px,90%);
+
+    height:32px;
+
+    border:3px solid white;
+
+    margin:30px 0;
+
+}
+
+#bossLifeFill{
+
+    width:100%;
+
+    height:100%;
+
+    background:
+    linear-gradient(90deg,#ff0066,#ff66aa);
+
+}
+
+#dragon{
+
+    width:260px;
+
+    margin:30px;
+
+    animation:dragonFloat 2s ease-in-out infinite;
+
+}
+
+@keyframes dragonFloat{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+/* ===========================
+VIDEO
+=========================== */
+
+#video{
+
+    display:none;
+
+    width:min(900px,95vw);
+
+    margin-top:35px;
+
+    border-radius:18px;
+
+    box-shadow:
+    0 0 30px #7fe9ff;
+
+}
+
+#message{
+
+    display:none;
+
+    margin-top:35px;
+
+    line-height:2;
+
+    max-width:850px;
+
+}
+
+/* ===========================
+RESPONSIVE
+=========================== */
+
+@media(max-width:900px){
+
+#answers{
+
+grid-template-columns:1fr;
+
+}
+
+h1{
+
+font-size:28px;
+
+}
+
+#dragon{
+
+width:180px;
+
+}
+
+}
+
+/* =====================================
+DRAGÓN FINAL
+===================================== */
+
+
+#dragon{
+
+font-size:180px;
+display:block;
+filter:
+drop-shadow(0 0 20px #ff00ff)
+drop-shadow(0 0 50px #ff66ff);
+
+    width:260px;
+
+    margin:30px;
+
+    animation:
+    dragonFloat 2s infinite ease-in-out;
+
+}
+
+
+@keyframes dragonFloat{
+
+
+0%{
+
+transform:translateY(0);
+
+}
+
+
+50%{
+
+transform:translateY(-15px);
+
+}
+
+
+100%{
+
+transform:translateY(0);
+
+}
+
+}
+
+
+
+.hit{
+
+animation:
+
+hitAnimation .2s;
+
+}
+
+
+@keyframes hitAnimation{
+
+
+0%{
+
+transform:scale(1);
+
+}
+
+
+50%{
+
+transform:scale(.8);
+
+filter:
+brightness(3);
+
+}
+
+
+100%{
+
+transform:scale(1);
+
+}
+
+
+}
+
+
+/* VIDA DEL DRAGON */
+
+
+.bossLife{
+
+width:600px;
+
+height:35px;
+
+border:3px solid white;
+
+background:#111;
+
+}
+
+
+#bossLifeFill{
+
+height:100%;
+
+width:100%;
+
+background:
+
+linear-gradient(
+90deg,
+#ff0055,
+#ff66ff
+);
+
+transition:.3s;
+
+}
+
+/* =====================================
+COFRE DEL REGALO
+===================================== */
+
+
+#chest{
+
+    font-size:120px;
+
+    margin:35px;
+
+    cursor:pointer;
+
+    filter:
+    drop-shadow(0 0 20px #ffe66d);
+
+    animation:
+    chestFloat 2s infinite ease-in-out;
+
+}
+
+
+@keyframes chestFloat{
+
+
+0%{
+
+transform:translateY(0);
+
+}
+
+
+50%{
+
+transform:translateY(-15px);
+
+}
+
+
+100%{
+
+transform:translateY(0);
+
+}
+
+}
+
+
+
+.openChest{
+
+animation:
+
+openChest .8s forwards;
+
+}
+
+
+
+@keyframes openChest{
+
+
+0%{
+
+transform:scale(1);
+
+}
+
+
+50%{
+
+transform:scale(1.4) rotate(10deg);
+
+}
+
+
+100%{
+
+transform:scale(0);
+
+opacity:0;
+
+}
+
+}
+
+@keyframes floatLove{
+
+from{
+
+transform:
+translateY(0);
+
+opacity:1;
+
+}
+
+
+to{
+
+transform:
+translateY(-110vh);
+
+opacity:0;
+
+}
+
+}
+
+#secretText{
+
+margin-top:20px;
+
+color:#aef8ff;
+
+font-size:14px;
+
+animation:
+blink 2s infinite;
+
+}

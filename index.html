@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Arcade del Amor ❤️</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- =======================
+FONDO
+======================= -->
+
+<div id="background">
+
+    <div id="stars"></div>
+
+    <div id="particles"></div>
+
+    <div id="moon"></div>
+
+</div>
+
+<!-- =======================
+PANTALLA DE INICIO
+======================= -->
+
+<section id="startScreen" class="screen active">
+
+    <h1>ARCADE DEL AMOR</h1>
+
+    <h2>❤️ Edición Especial ❤️</h2>
+
+    <p>
+
+        Superá todos los niveles,
+        derrotá al Dragón del Amor
+        y descubrí el regalo secreto.
+
+    </p>
+
+    <button id="startBtn">
+
+        ▶ COMENZAR
+
+    </button>
+
+</section>
+
+<!-- =======================
+JUEGO
+======================= -->
+
+<section id="gameScreen" class="screen">
+
+    <header class="hud">
+
+        <div id="levelText">
+
+            Nivel 1/6
+
+        </div>
+
+        <div id="scoreText">
+
+            Puntos: 0
+
+        </div>
+
+    </header>
+
+    <div id="lives">
+
+        ❤️ ❤️ ❤️
+
+    </div>
+
+    <div id="progressBar">
+
+        <div id="progressFill"></div>
+
+    </div>
+
+    <h2 id="question">
+
+    </h2>
+
+    <div id="answers">
+
+    </div>
+
+</section>
+
+<!-- =======================
+TRANSICIÓN
+======================= -->
+
+<section id="transition" class="screen">
+
+    <h1>
+
+        LEVEL COMPLETE
+
+    </h1>
+
+</section>
+
+<!-- =======================
+GAME OVER
+======================= -->
+
+<section id="gameOver" class="screen">
+
+    <h1>
+
+        GAME OVER
+
+    </h1>
+
+    <p>
+
+        El amor merece otro intento ❤️
+
+    </p>
+
+    <button id="retryBtn">
+
+        VOLVER A INTENTAR
+
+    </button>
+
+</section>
+
+<!-- =======================
+BOSS
+======================= -->
+
+<section id="bossScreen" class="screen">
+
+    <h1>
+
+        DRAGÓN DEL AMOR
+
+    </h1>
+
+    <div class="bossLife">
+
+        <div id="bossLifeFill"></div>
+
+    </div>
+
+   <div id="dragon">
+
+🐉
+
+</div>
+
+    <button id="attackBtn">
+
+        ⚔️ ATACAR
+
+    </button>
+
+</section>
+
+<!-- =======================
+FINAL
+======================= -->
+
+<section id="endingScreen" class="screen">
+
+    <h1>
+
+        🎉 VICTORIA 🎉
+
+    </h1>
+
+    <p>
+
+        Has desbloqueado el verdadero regalo.
+
+    </p>
+
+    <div id="chest">
+
+🎁
+
+</div>
+
+    <button id="giftBtn">
+
+        ABRIR REGALO
+
+    </button>
+
+<p id="secretText">
+
+Has desbloqueado algo especial ❤️
+
+</p>
+
+    <video
+        id="video"
+        controls>
+
+        <source src="video.mp4" type="video/mp4">
+
+    </video>
+
+    <div id="message">
+
+    </div>
+
+</section>
+
+<script src="game.js"></script>
+
+</body>
+
+</html>

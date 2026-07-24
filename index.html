@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Arcade del Amor ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Press Start 2P', cursive;
+background:linear-gradient(180deg,#090015,#16002f,#220044);
+overflow:hidden;
+height:100vh;
+color:white;
+}
+
+#stars{
+position:fixed;
+width:100%;
+height:100%;
+overflow:hidden;
+pointer-events:none;
+}
+
+.star{
+position:absolute;
+color:white;
+animation:floatStar linear infinite;
+}
+
+@keyframes floatStar{
+from{
+transform:translateY(110vh);
+}
+to{
+transform:translateY(-10vh);
+}
+}
+
+.butterfly{
+position:absolute;
+font-size:28px;
+animation:fly 12s linear infinite;
+}
+
+@keyframes fly{
+0%{
+transform:translate(-10vw,80vh);
+}
+100%{
+transform:translate(110vw,-10vh);
+}
+}
+
+.container{
+position:relative;
+z-index:10;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+height:100vh;
+padding:20px;
+text-align:center;
+}
+
+h1{
+font-size:30px;
+margin-bottom:25px;
+color:#ff6bff;
+text-shadow:
+0 0 10px #ff00ff,
+0 0 20px #ff00ff,
+0 0 30px #ff00ff;
+}
+
+.level{
+font-size:16px;
+margin-bottom:20px;
+color:#00ffff;
+}
+
+.question{
+font-size:18px;
+max-width:800px;
+line-height:1.8;
+margin-bottom:35px;
+}
+
+.answers{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+max-width:700px;
+width:100%;
+}
+
+button{
+font-family:'Press Start 2P';
+padding:18px;
+border:none;
+cursor:pointer;
+background:#111;
+color:white;
+border:2px solid #00ffff;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+background:#00ffff;
+color:black;
+}
+
+.score{
+position:absolute;
+top:20px;
+right:20px;
+font-size:12px;
+color:#00ffff;
+}
+
+#transition{
+display:none;
+position:fixed;
+inset:0;
+background:black;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:100;
+}
+
+#transition h2{
+font-size:40px;
+color:#00ff99;
+text-shadow:0 0 20px #00ff99;
+animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+50%{
+transform:scale(1.1);
+}
+}
+
+#final{
+display:none;
+position:fixed;
+inset:0;
+background:#090015;
+z-index:100;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+padding:20px;
+text-align:center;
+}
+
+#giftBtn{
+font-size:20px;
+padding:25px 40px;
+margin-top:20px;
+}
+
+#photoContainer{
+display:none;
+margin-top:30px;
+}
+
+#photoContainer img{
+max-width:350px;
+border-radius:20px;
+box-shadow:0 0 30px #ff66ff;
+}
+
+.message{
+margin-top:25px;
+font-size:16px;
+line-height:2;
+max-width:800px;
+}
+
+.progress{
+position:absolute;
+top:20px;
+left:20px;
+font-size:12px;
+color:#ff99ff;
+}
+
+#startBtn{
+font-size:20px;
+padding:25px 40px;
+}
+
+#bossFight{
+position:fixed;
+inset:0;
+background:#090015;
+display:none;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:100;
+}
+
+#dragon{
+font-size:180px;
+margin:20px;
+filter:
+drop-shadow(0 0 20px #ff00ff)
+drop-shadow(0 0 40px #ff66ff);
+}
+
+.boss-bar{
+width:600px;
+height:35px;
+background:#222;
+border:3px solid white;
+margin:20px 0;
+}
+
+#bossHealth{
+height:100%;
+background:linear-gradient(90deg,#ff00aa,#ff66ff);
+transition:.2s;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+
+<div class="butterfly" style="top:10%;animation-delay:0s;">🦋</div>
+<div class="butterfly" style="top:40%;animation-delay:4s;">🦋</div>
+<div class="butterfly" style="top:70%;animation-delay:8s;">🦋</div>
+
+<div id="startScreen" class="container">
+
+<h1>ARCADE DEL AMOR ❤️</h1>
+
+<p style="max-width:700px;line-height:2;margin-bottom:40px;">
+Superá todos los niveles para desbloquear el regalo secreto 🎁
+</p>
+
+<button id="startBtn">
+▶ COMENZAR AVENTURA
+</button>
+
+</div>
+
+<div class="container" id="gameContainer" style="display:none;">
+
+<div class="progress" id="progress">
+Nivel 1/6
+</div>
+
+<div class="score" id="score">
+Puntos: 0
+</div>
+
+<h1>ARCADE DEL AMOR ❤️</h1>
+
+<div class="level" id="level">
+Nivel 1
+</div>
+
+<div class="question" id="question"></div>
+
+<div class="answers" id="answers"></div>
+
+</div>
+
+<div id="transition">
+<h2>LEVEL COMPLETED</h2>
+</div>
+
+<div id="bossFight" style="display:none;">
+
+<h1 style="font-size:40px;">
+🐉 DRAGÓN DEL AMOR 💖
+</h1>
+
+<p style="margin:20px;">
+Derrotalo para desbloquear tu regalo
+</p>
+
+<div class="boss-bar">
+<div id="bossHealth" style="width:100%;"></div>
+</div>
+
+<div id="dragon">
+🐉
+</div>
+
+<button id="attackBtn">
+⚔️ ATACAR
+</button>
+
+</div>
+
+<div id="final">
+
+    <h1>🎉 VICTORIA 🎉</h1>
+
+    <p style="margin-top:20px;">
+        Ganaste el juego más importante de todos...
+        <br><br>
+        Mi corazón ❤️
+    </p>
+
+    <button id="giftBtn">
+        🎁 ABRIR REGALO
+    </button>
+
+    <div id="photoContainer">
+
+        <img src="foto.jpg" alt="Nuestra foto">
+
+        <div class="message">
+
+            Gracias por cada momento,
+            por cada sonrisa,
+            por acompañarme siempre.
+
+            <br><br>
+
+            Te amo muchísimo ❤️
+
+            <br><br>
+
+            Y aunque este sea un pequeño juego,
+            quería recordarte que sos la persona
+            más importante de mi vida.
+
+            <br><br>
+
+            ✨ Para siempre vos ✨
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+for(let i=0;i<70;i++){
+
+const star=document.createElement("div");
+
+star.classList.add("star");
+star.innerHTML="⭐";
+
+star.style.left=Math.random()*100+"vw";
+star.style.fontSize=(10+Math.random()*20)+"px";
+star.style.animationDuration=(5+Math.random()*10)+"s";
+
+document.getElementById("stars").appendChild(star);
+}
+
+const levels=[
+
+{
+question:"❤️ ¿Dónde fue que nuestro primer beso?",
+answers:[
+"🍕 En una pizzería.",
+"🌳 En una plaza.",
+"☕ En un café.",
+"🏎️ En el Motorshow."
+],
+correct:3
+},
+
+{
+question:"❤️ ¿Cuál fue nuestro primer viaje juntos?",
+answers:[
+"🏖️ Mar del Plata.",
+"⛰️ Bariloche.",
+"🍷 Mendoza.",
+"🚢 Colonia."
+],
+correct:2
+},
+
+{
+question:"❤️ ¿Dónde me pediste que sea tu novia?",
+answers:[
+"🌅 En la playa.",
+"🌉 En un muelle cerca de la playa.",
+"🌳 En un parque.",
+"🍽️ En un restaurante."
+],
+correct:1
+},
+
+{
+question:"❤️ ¿Qué constelación elegimos como la nuestra?",
+answers:[
+"⭐ Cruz del Sur.",
+"🌌 Orión.",
+"✨ Casiopea.",
+"🌠 Escorpio."
+],
+correct:1
+},
+
+{
+question:"❤️ ¿Dónde nos conocimos?",
+answers:[
+"🏫 En la facultad.",
+"💼 En la Municipalidad de 3 de Febrero.",
+"🎉 En una fiesta.",
+"🏋️ En un gimnasio."
+],
+correct:1
+},
+
+{
+question:"❤️ ¿Cuál fue el primer viaje que planeamos y terminó cancelándose?",
+answers:[
+"🌊 Mar del Plata.",
+"🍷 Mendoza.",
+"⛰️ Bariloche.",
+"🇺🇾 Montevideo."
+],
+correct:2
+}
+
+];
+
+let current=0;
+let score=0;
+
+let current = 0;
+let score = 0;
+
+
+// BOTÓN PARA EMPEZAR EL JUEGO
+document.getElementById("startBtn").onclick = () => {
+
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("gameContainer").style.display = "flex";
+
+    loadLevel();
+
+};
+
+
+// CARGAR NIVEL
+function loadLevel(){
+
+    document.getElementById("question").textContent =
+    levels[current].question;
+
+
+    document.getElementById("level").textContent =
+    "Nivel " + (current + 1);
+
+
+    document.getElementById("progress").textContent =
+    "Nivel " + (current + 1) + "/6";
+
+
+    const container = document.getElementById("answers");
+
+    container.innerHTML = "";
+
+
+    levels[current].answers.forEach((answer,index)=>{
+
+
+        const btn = document.createElement("button");
+
+        btn.textContent = answer;
+
+
+        btn.onclick = () => check(index);
+
+
+        container.appendChild(btn);
+
+
+    });
+
+}
+
+
+
+// COMPROBAR RESPUESTA
+function check(index){
+
+
+    if(index === levels[current].correct){
+
+        score += 100;
+
+
+        document.getElementById("score").textContent =
+        "Puntos: " + score;
+
+    }
+
+
+
+    document.getElementById("transition").style.display = "flex";
+
+
+
+    setTimeout(()=>{
+
+
+        document.getElementById("transition").style.display = "none";
+
+
+        current++;
+
+
+
+        if(current < levels.length){
+
+
+            loadLevel();
+
+
+        }else{
+
+
+            document.getElementById("gameContainer").style.display = "none";
+
+
+            startBossFight();
+
+
+        }
+
+
+
+    },1500);
+
+
+
+}
+
+
+
+// DRAGÓN FINAL 🐉
+
+let bossLife = 60;
+
+
+
+function startBossFight(){
+
+
+    document.getElementById("bossFight").style.display = "flex";
+
+
+}
+
+
+
+
+document.getElementById("attackBtn").onclick = ()=>{
+
+
+    bossLife--;
+
+
+    document.getElementById("bossHealth").style.width =
+    (bossLife / 60 * 100) + "%";
+
+
+
+    if(bossLife <= 0){
+
+
+        document.getElementById("bossFight").style.display = "none";
+
+
+        document.getElementById("final").style.display = "flex";
+
+
+    }
+
+
+};
+
+
+
+
+// ABRIR REGALO 🎁
+
+document.getElementById("giftBtn").onclick = ()=>{
+
+
+    document.getElementById("photoContainer").style.display = "block";
+
+
+};
+
+</script>
+
+</body>
+</html>
